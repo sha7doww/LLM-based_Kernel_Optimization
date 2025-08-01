@@ -10,11 +10,11 @@
 
 ```bash
 python3 scripts/generate_and_eval_single_sample.py         
-dataset_src="huggingface"  \
-level=1  \
-problem_id=101  \         
+dataset_src=huggingface  \
+level=2  \
+problem_id=40  \         
 server_type=openai  \
-model_name="o3"  \
+model_name=o3  \
 gpu_arch="['Ampere']"  \
 log=true
 ```
@@ -28,6 +28,12 @@ level=2 problem_id=40  \
 kernel_src_path=results/eval_logs/generated_kernel_level_2_problem_40.py  \
 gpu_arch="['Ampere']"
 ```
+
+
+
+
+
+
 
 
 ### Run on all problems
@@ -67,3 +73,36 @@ level=1  \
 hardware=L40S_matx3  \
 baseline=baseline_time_torch
 ```
+
+
+
+
+
+多个 arch 会发生什么？
+
+```python
+valid_archs = ["Maxwell", "Pascal", "Volta", "Turing", "Ampere", "Hopper", "Ada"]
+```
+
+
+
+
+
+`eval_kernel_against_ref`
+
+```python
+assert torch.cuda.is_available()
+
+
+Model, get_init_inputs, get_inputs = load_original_model_and_inputs(
+    original_model_src, context
+)  ## 
+```
+
+
+
+
+
+
+
+是否要先跑一个 sample 来测试？避免询问 LLM 但是在后面报错的情况
